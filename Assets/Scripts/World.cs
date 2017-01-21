@@ -7,7 +7,14 @@ public class World : MonoBehaviour
     public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
     public GameObject chunkPrefab;
 
-    // Use this for initialization
+    public string worldName = "world";
+
+    public int newChunkX;
+    public int newChunkY;
+    public int newChunkZ;
+
+    public bool genChunk;
+    
     void Start ()
     {
         for (int x = -2; x < 2; x++)
@@ -22,11 +29,24 @@ public class World : MonoBehaviour
         }
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+        if (genChunk)
+        {
+            genChunk = false;
+            WorldPos chunkPos = new WorldPos(newChunkX, newChunkY, newChunkZ);
+            Chunk chunk = null;
+
+            if (chunks.TryGetValue(chunkPos, out chunk))
+            {
+                DestroyChunk(chunkPos.x, chunkPos.y, chunkPos.z);
+            }
+            else
+            {
+                CreateChunk(chunkPos.x, chunkPos.y, chunkPos.z);
+            }
+        }
+    }
 
     public void CreateChunk(int x, int y, int z)
     {
@@ -63,6 +83,10 @@ public class World : MonoBehaviour
                 }
             }
         }
+
+        // TO-DO: Switch the order of these two variables if you save less often and don't mind saving taking longer
+        newChunk.SetBlocksUnmodified();
+        Serialization.Load(newChunk);
     }
 
     public Chunk GetChunk(int x, int y, int z)
@@ -118,7 +142,8 @@ public class World : MonoBehaviour
         Chunk chunk = null;
         if (chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
         {
-            Object.Destroy(chunk.gameObject);
+            Serialization.SaveChunk(chunk);
+            UnityEngine.Object.Destroy(chunk.gameObject); // TO-DO: Simplify this?
             chunks.Remove(new WorldPos(x, y, z));
         }
     }

@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class Chunk : MonoBehaviour {
 
-    private Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize];
+    public Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize]; // TO-DO: Should this be made private again and an accessor or something set up?
     public static int chunkSize = 16;
     public bool update = true;
 
@@ -92,6 +92,14 @@ public class Chunk : MonoBehaviour {
         else
         {
             world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
+        }
+    }
+
+    public void SetBlocksUnmodified()
+    {
+        foreach (Block block in blocks)
+        {
+            block.changed = false;
         }
     }
 }
