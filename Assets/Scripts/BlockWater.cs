@@ -3,9 +3,9 @@ using System.Collections;
 using System;
 
 [Serializable]
-public class BlockSand : Block
-{
-    public BlockSand() : base()
+public class BlockWater : Block {
+
+    public BlockWater() : base()
     {
 
     }
@@ -13,8 +13,13 @@ public class BlockSand : Block
     public override Tile TexturePosition(Direction direction)
     {
         Tile tile = new Tile();
-        tile.x = 0;
+        tile.x = 1;
         tile.y = 0;
         return tile;
+    }
+
+    public override bool IsSolid(Direction direction)
+    {
+        return true;
     }
 }

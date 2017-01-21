@@ -20,12 +20,19 @@ public class TerrainGenBeach {
     float treeFrequency = 0.2f;
     int treeDensity = 3;*/
 
-    float sandBaseHeight = -24;
-    float sandBaseNoise = 0.05f;
+    float sandBaseHeight = -12; //-24
+    float sandBaseNoise = 0f; // 0.05f <- Makes things flat when at zero
     float sandBaseNoiseHeight = 4;
-    float sandDuneHeight = 48;
-    float sandDuneFrequency = 0.008f;
+    float sandDuneHeight = 0; // 48
+    float sandDuneFrequency = 0f; // 0.008f
     float sandMinHeight = -12;
+
+    int beachEdgeDistanceFromWall = 35;
+    float beachEdgeAmplitude = 2.5f;
+    float omegaX = .2f;
+    int beachMinDistance = 20;
+
+    int cliffMaxHeight = 10;
 
     public Chunk ChunkGen(Chunk chunk)
     {        
@@ -51,9 +58,20 @@ public class TerrainGenBeach {
         if (sandHeight < sandMinHeight)
             sandHeight = Mathf.FloorToInt(sandMinHeight);
         sandHeight += GetNoise(x, 0, z, sandBaseNoise, Mathf.FloorToInt(sandBaseNoiseHeight));
+        
+
+
         for (int y = chunk.pos.y - 8; y < chunk.pos.y + Chunk.chunkSize; y++)
         {
-            if (y <= sandHeight)
+            if (x <= 0 && y <= cliffMaxHeight)
+            {
+                SetBlock(x, y, z, new BlockCliff(), chunk);
+            }
+            else if (x > (Mathf.Sin(z * omegaX) * beachEdgeAmplitude) + beachMinDistance + Mathf.CeilToInt(beachMinDistance / 2) && y <= sandHeight) // (x > 25 && y <= sandHeight)
+            {
+                SetBlock(x, y, z, new BlockWater(), chunk);
+            }
+            else if (y <= sandHeight)
             {
                 SetBlock(x, y, z, new BlockSand(), chunk);
                 // Place rocks or other objects here
