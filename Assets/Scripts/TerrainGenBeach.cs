@@ -59,7 +59,7 @@ public class TerrainGenBeach {
             sandHeight = Mathf.FloorToInt(sandMinHeight);
         sandHeight += GetNoise(x, 0, z, sandBaseNoise, Mathf.FloorToInt(sandBaseNoiseHeight));
         
-
+        
 
         for (int y = chunk.pos.y - 8; y < chunk.pos.y + Chunk.chunkSize; y++)
         {

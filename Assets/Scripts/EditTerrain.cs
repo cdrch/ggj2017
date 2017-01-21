@@ -57,6 +57,19 @@ public static class EditTerrain
         return true;
     }
 
+    public static bool SetBlock(Vector3 position, Block block, World w, bool adjacent = false)
+    {
+        Chunk chunk = w.GetChunk((int)position.x, (int)position.y, (int)position.z); // TO-DO: Remove redundancy
+        if (chunk == null)
+            return false;
+
+        WorldPos pos = GetBlockPos(position);
+
+        chunk.world.SetBlock(pos.x, pos.y, pos.z, block);
+
+        return true;
+    }
+
     public static Block GetBlock(RaycastHit hit, bool adjacent = false)
     {
         Chunk chunk = hit.collider.GetComponent<Chunk>();
