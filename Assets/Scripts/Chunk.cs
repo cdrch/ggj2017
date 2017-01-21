@@ -7,9 +7,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class Chunk : MonoBehaviour {
 
-    Block[,,] blocks;
+    private Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize];
     public static int chunkSize = 16;
     public bool update = true;
+
+    public World world;
+    public WorldPos pos;
 
     MeshFilter filter;
     MeshCollider col;
@@ -18,32 +21,23 @@ public class Chunk : MonoBehaviour {
     {
         filter = gameObject.GetComponent<MeshFilter>();
         col = gameObject.GetComponent<MeshCollider>();
-        //past here is just to set up an example chunk
-        blocks = new Block[chunkSize, chunkSize, chunkSize];
-        for (int x = 0; x < chunkSize; x++)
-        {
-            for (int y = 0; y < chunkSize; y++)
-            {
-                for (int z = 0; z < chunkSize; z++)
-                {
-                    blocks[x, y, z] = new BlockAir();
-                }
-            }
-        }
-        blocks[3, 5, 2] = new Block();
-        blocks[4, 5, 2] = new BlockGrass();
-        UpdateChunk();
     }	
 
 	void Update ()
     {
-		
-	}
+        if (update)
+        {
+            update = false;
+            UpdateChunk();
+        }
+    }
 
     // Returns a block based on x, y, and z coordinates
     public Block GetBlock(int x, int y, int z)
     {
-        return blocks[x, y, z];
+        if (InRange(x) && InRange(y) && InRange(z))
+            return blocks[x, y, z];
+        return world.GetBlock(pos.x + x, pos.y + y, pos.z + z);
     }
 
     // Updates the chunk based on its contents
@@ -79,5 +73,25 @@ public class Chunk : MonoBehaviour {
         mesh.RecalculateNormals();
 
         col.sharedMesh = mesh;
+    }
+
+    public static bool InRange(int index)
+    {
+        if (index < 0 || index >= chunkSize)
+            return false;
+
+        return true;
+    }
+
+    public void SetBlock(int x, int y, int z, Block block)
+    {
+        if (InRange(x) && InRange(y) && InRange(z))
+        {
+            blocks[x, y, z] = block;
+        }
+        else
+        {
+            world.SetBlock(pos.x + x, pos.y + y, pos.z + z, block);
+        }
     }
 }
