@@ -9,7 +9,8 @@ public class Chunk : MonoBehaviour {
 
     public Block[,,] blocks = new Block[chunkSize, chunkSize, chunkSize]; // TO-DO: Should this be made private again and an accessor or something set up?
     public static int chunkSize = 16;
-    public bool update = true;
+    public bool update = false;
+    public bool rendered;
 
     public World world;
     public WorldPos pos;
@@ -43,6 +44,7 @@ public class Chunk : MonoBehaviour {
     // Updates the chunk based on its contents
     void UpdateChunk()
     {
+        rendered = true;
         MeshData meshData = new MeshData();
         for (int x = 0; x < chunkSize; x++)
         {
