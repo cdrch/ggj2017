@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Modify : MonoBehaviour
 {
+    public World world;
     Vector2 rot;
+    public float distanceFromPointToPlace = 1f;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, distanceFromPointToPlace))
             {
                 EditTerrain.SetBlock(hit, new BlockAir());
+            }
+            else
+            {
+                
+                WorldPos blockPosToEdit = EditTerrain.GetBlockPos(transform.position + Vector3.forward); // Get the block one unit away from the transform of whatever this script is attached to
+                EditTerrain.SetBlock(transform.position + Vector3.forward * distanceFromPointToPlace, new BlockSand(), world);
+                
             }
         }
 
