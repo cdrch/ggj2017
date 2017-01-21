@@ -11,6 +11,7 @@ public class BlockAir : Block {
 
     public override MeshData BlockData(Chunk chunk, int x, int y, int z, MeshData meshData)
     {
+        //meshData.useRenderDataForCol = true; // TO-DO: Check if this is actually needed?
         return meshData;
     }
 
