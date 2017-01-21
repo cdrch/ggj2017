@@ -17,11 +17,11 @@ public class World : MonoBehaviour
     
     void Start ()
     {
-        for (int x = -2; x < 2; x++)
+        for (int x = -4; x < 4; x++)
         {
-            for (int y = -1; y < 1; y++)
+            for (int y = -1; y < 3; y++)
             {
-                for (int z = -1; z < 1; z++)
+                for (int z = -4; z < 4; z++)
                 {
                     CreateChunk(x * 16, y * 16, z * 16);
                 }
@@ -66,27 +66,11 @@ public class World : MonoBehaviour
         // Add the new chunk to the chunks dictionary with the position as the key
         chunks.Add(worldPos, newChunk);
 
-        for (int xi = 0; xi < 16; xi++)
-        {
-            for (int yi = 0; yi < 16; yi++)
-            {
-                for (int zi = 0; zi < 16; zi++)
-                {
-                    if (yi <= 7)
-                    {
-                        SetBlock(x + xi, y + yi, z + zi, new BlockGrass());
-                    }
-                    else
-                    {
-                        SetBlock(x + xi, y + yi, z + zi, new BlockAir());
-                    }
-                }
-            }
-        }
-
-        // TO-DO: Switch the order of these two variables if you save less often and don't mind saving taking longer
+        var terrainGen = new TerrainGen();
+        newChunk = terrainGen.ChunkGen(newChunk);
+        // TO-DO: Switch the order of these two variables if you save less often and don't mind saving taking longer - make sure to test and profile!
         newChunk.SetBlocksUnmodified();
-        Serialization.Load(newChunk);
+        bool loaded = Serialization.Load(newChunk);
     }
 
     public Chunk GetChunk(int x, int y, int z)

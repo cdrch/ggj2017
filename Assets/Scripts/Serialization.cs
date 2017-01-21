@@ -38,7 +38,7 @@ public static class Serialization
 
         IFormatter formatter = new BinaryFormatter();
         Stream stream = new FileStream(saveFile, FileMode.Create, FileAccess.Write, FileShare.None);
-        formatter.Serialize(stream, chunk.blocks);
+        formatter.Serialize(stream, save);
         stream.Close();
 
     }
