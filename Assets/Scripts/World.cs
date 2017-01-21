@@ -27,7 +27,7 @@ public class World : MonoBehaviour
         // Add the new chunk to the chunks dictionary with the position as the key
         chunks.Add(worldPos, newChunk);
 
-        var terrainGen = new TerrainGen();
+        var terrainGen = new TerrainGenBeach();
         newChunk = terrainGen.ChunkGen(newChunk);
         // TO-DO: Switch the order of these two variables if you save less often and don't mind saving taking longer - make sure to test and profile!
         newChunk.SetBlocksUnmodified();
