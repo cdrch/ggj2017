@@ -17,6 +17,7 @@ public class SolutionChecker : MonoBehaviour {
     int testBlueprintWidth = 6;
     int testBlueprintLength = 6;
     int testBlueprintHeight = 1;
+    bool testDoesHaveRoof = false;
 
 	// Use this for initialization
 	void Start () {
@@ -59,22 +60,22 @@ public class SolutionChecker : MonoBehaviour {
                     if (world.GetBlock(x, y, z) is BlockSand)
                     {
                         Debug.Log("yep");
-                        if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, false, false))
+                        if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, false, false))
                         {
                             Debug.Log("SOMETHING WAS TRUE 1");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, true, false))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, true, false))
                         {
                             Debug.Log("SOMETHING WAS TRUE 2");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, false, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, false, true))
                         {
                             Debug.Log("SOMETHING WAS TRUE 3");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, true, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, true, true))
                         {
                             Debug.Log("SOMETHING WAS TRUE 4");
                             return true;
@@ -87,9 +88,9 @@ public class SolutionChecker : MonoBehaviour {
         return false;
     }
 
-    bool LookForRoomsFixed(WorldPos startingBlock, int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool flipped, bool backwards)
+    bool LookForRoomsFixed(WorldPos startingBlock, int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool roof, bool flipped, bool backwards) // flipped and backwards not implemented
     {
-        for (int y = 0; y < blueprintHeight; y++)
+        for (int y = 0; y < blueprintHeight + 1; y++)
         {
             for (int x = 0; x < blueprintWidth; x++)
             {
@@ -97,22 +98,33 @@ public class SolutionChecker : MonoBehaviour {
                 {
                     Block temp = world.GetBlock(startingBlock.x + x, startingBlock.y + y, startingBlock.z + z);
                     //Debug.Log(z + x * blueprintWidth);
-                    switch (blueprint[z + x * blueprintWidth])
+                    if (y < blueprintHeight)
                     {
-                        case 0:
-                            if (!(temp is BlockAir))
-                                return false;
-                            break;
-                        case 1:
+                        switch (blueprint[z + x * blueprintWidth])
+                        {
+                            case 0:
+                                if (!(temp is BlockAir))
+                                    return false;
+                                break;
+                            case 1:
+                                if (!(temp is BlockSand))
+                                    return false;
+                                break;
+                            case 2:
+                                if (!(temp is BlockLeaves))
+                                    return false;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else // roof
+                    {
+                        if (roof)
+                        {
                             if (!(temp is BlockSand))
                                 return false;
-                            break;
-                        case 2:
-                            if (!(temp is BlockLeaves))
-                                return false;
-                            break;
-                        default:
-                            break;
+                        }                        
                     }
                 }
             }
