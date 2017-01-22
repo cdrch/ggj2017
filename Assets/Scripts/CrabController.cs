@@ -36,31 +36,16 @@ public class CrabController : MonoBehaviour {
 	private void Update () {
         if (update) {
             // Set moveDirection based on input
-            moveDirection = new Vector3(moveSpeed * Input.GetAxis("Horizontal"), 
+            moveDirection = new Vector3(moveSpeed * Input.GetAxis("Horizontal"),
                                         0.0f, 
                                         moveSpeed * Input.GetAxis("Vertical"));
 
-            // Face the direction of velocity
-            if (moveDirection.sqrMagnitude > 0.1f) {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                targetRotation.x = transform.rotation.x;
-                targetRotation.z = transform.rotation.z;
-                transform.rotation = targetRotation;
-                lastDirection = moveDirection;
-            }
+            // Face the direction of movement
+            UpdateDirection();
 
             // Sand Interaction
             if (Input.GetKeyDown(KeyCode.Space)) {
-                RaycastHit hit;
-
-                // If sand block is detected, remove it
-                if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
-                    EditTerrain.SetBlock(hit, new BlockAir());
-                }
-                // If no sand block was detected, place one
-                else {
-                    EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
-                }
+                SandAction();
             }
 
             // Detect "Jump" input
@@ -86,9 +71,7 @@ public class CrabController : MonoBehaviour {
             rigidbod.AddForce(Vector3.up * gravity.y);
 
             // Update World Position
-            pos.x = (int)Mathf.Round(transform.position.x);
-            pos.y = (int)Mathf.Round(transform.position.y);
-            pos.z = (int)Mathf.Round(transform.position.z);
+            UpdateWorldPos();
         }
     }
 
@@ -107,7 +90,6 @@ public class CrabController : MonoBehaviour {
      * Return true if a Chunk Collider is detected below the player
      */
     private bool IsGrounded() {
-
         // Check for ground at a position that is slightly below the player
         Vector3 spherePos = new Vector3(transform.position.x, transform.position.y - 0.04f, transform.position.z);
 
@@ -116,5 +98,38 @@ public class CrabController : MonoBehaviour {
 
         // Return true if the Collider array is greater than zero (which means there is ground below us)
         return (sphereHits.Length > 0);
+    }
+
+
+    private void UpdateWorldPos() {
+        // Update World Position
+        pos.x = (int)Mathf.Round(transform.position.x);
+        pos.y = (int)Mathf.Round(transform.position.y);
+        pos.z = (int)Mathf.Round(transform.position.z);
+    }
+
+    private void UpdateDirection() {
+        // Face the direction of movement
+        if (moveDirection.sqrMagnitude > 0.1f) {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            targetRotation.x = transform.rotation.x;
+            targetRotation.z = transform.rotation.z;
+            transform.rotation = targetRotation;
+            lastDirection = moveDirection;
+        }
+    }
+
+    private void SandAction() {
+        // Store the RaycastHit
+        RaycastHit hit;
+
+        // If a sand block is detected, remove it
+        if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
+            EditTerrain.SetBlock(hit, new BlockAir());
+        }
+        // If no sand block is detected, place one down
+        else {
+            EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
+        }
     }
 }
