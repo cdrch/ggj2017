@@ -41,7 +41,7 @@ public class TerrainGenBeach {
             for (int z = chunk.pos.z - 3; z < chunk.pos.z + Chunk.chunkSize + 3; z++)
             {
                 chunk = ChunkColumnGen(chunk, x, z);
-
+                /*
                 // TESTING
                 for (int xb = 0; xb < 6; xb++)
                 {
@@ -51,7 +51,7 @@ public class TerrainGenBeach {
                             chunk.world.SetBlock(xb+1, -9, zb+1, new BlockSand());
                     }
                 }
-
+                */
                 
             }
         }
