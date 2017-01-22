@@ -6,8 +6,26 @@ public class World : MonoBehaviour
 {
     public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
     public GameObject chunkPrefab;
+    public GameObject crabPrefab;
 
     public string worldName = "world";
+
+    private CrabController crabController;
+
+    public void CreateCrab(int x, int y, int z) {
+        WorldPos worldPos = new WorldPos(x, y, z);
+
+        GameObject newCrab = Instantiate(
+                                        crabPrefab,
+                                        new Vector3(x, y, z),
+                                        Quaternion.Euler(Vector3.zero)
+                                    ) as GameObject;
+
+        crabController = newCrab.GetComponent<CrabController>();
+        crabController.pos = worldPos;
+        crabController.world = this;
+        crabController.update = true;
+    }
 
     public void CreateChunk(int x, int y, int z)
     {
