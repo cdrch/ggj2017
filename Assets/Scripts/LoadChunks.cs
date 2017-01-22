@@ -10,6 +10,12 @@ public class LoadChunks : MonoBehaviour
     List<WorldPos> updateList = new List<WorldPos>();
     List<WorldPos> buildList = new List<WorldPos>();
 
+    // Equals 'true' when no chunks were added
+    private bool doneAddingChunks = false;  
+
+    // Equals 'true' once the player is created
+    private bool createdPlayer = false;
+
     int timer = 0;
 
     static WorldPos[] chunkPositions = {   new WorldPos( 0, 0,  0), new WorldPos(-1, 0,  0), new WorldPos( 0, 0, -1), new WorldPos( 0, 0,  1), new WorldPos( 1, 0,  0),
@@ -72,6 +78,9 @@ public class LoadChunks : MonoBehaviour
         // If there are not currently any chunks to generate
         if (updateList.Count == 0)
         {
+            // Used to track whether a chunk was added or not
+            bool addedNewChunk = false;
+
             // Cycle through the array of positions
             for (int i = 0; i < chunkPositions.Length; i++)
             {
@@ -88,6 +97,11 @@ public class LoadChunks : MonoBehaviour
                 if (newChunk != null
                     && (newChunk.rendered || updateList.Contains(newChunkPos)))
                     continue;
+
+                // Set to true, because we're adding a new chunk
+                addedNewChunk = true;
+
+
                 // Load a column of chunks in this position
                 for (int y = -4; y < 4; y++)
                 {
@@ -104,6 +118,9 @@ public class LoadChunks : MonoBehaviour
                 }
                 return;
             }
+
+            // If no chunk was added, set doneAddingChunks to 'true'
+            doneAddingChunks = !addedNewChunk;
         }
     }
 
@@ -128,8 +145,21 @@ public class LoadChunks : MonoBehaviour
         if (updateList.Count != 0)
         {
             Chunk chunk = world.GetChunk(updateList[0].x, updateList[0].y, updateList[0].z);
-            if (chunk != null)
+            if (chunk != null) {
                 chunk.update = true;
+
+                // Check if the player has been created yet
+                if (!createdPlayer) {
+                    // If the current chunk position equals the following hard-coded position, create the player
+                    if (chunk.pos.Equals(new WorldPos(0, -16, -16))) {
+                        // Create the crab player at a hard-coded position
+                        world.CreateCrab(10, -8, -5);
+
+                        // Set to 'true' so we know the player has been created
+                        createdPlayer = true;
+                    }
+                }
+            }
             updateList.RemoveAt(0);
         }
     }
