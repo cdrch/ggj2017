@@ -29,7 +29,7 @@ public class SolutionChecker : MonoBehaviour {
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            if(CheckAgainstWinConditions())
+            if(CheckAgainstAllWinConditions())
             {
                 Debug.Log("WIN");
             }
@@ -40,10 +40,14 @@ public class SolutionChecker : MonoBehaviour {
         }
 	}
 
-    public bool CheckAgainstWinConditions()
+    public bool CheckAgainstAllWinConditions()
     {
-        // Let's assume, as a test case, a house of 3x3x1 interior space with walls wins
+        
+        return CheckAgainstWinCondition(testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof);
+    }
 
+    public bool CheckAgainstWinCondition(int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool hasRoof)
+    {
         for (int x = -16; x < 16; x++)
         {
             for (int y = -16; y < 16; y++)
@@ -60,22 +64,22 @@ public class SolutionChecker : MonoBehaviour {
                     if (world.GetBlock(x, y, z) is BlockSand)
                     {
                         Debug.Log("yep");
-                        if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, false, false))
+                        if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, false))
                         {
                             Debug.Log("SOMETHING WAS TRUE 1");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, true, false))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, false))
                         {
                             Debug.Log("SOMETHING WAS TRUE 2");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, false, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, true))
                         {
                             Debug.Log("SOMETHING WAS TRUE 3");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof, true, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, true))
                         {
                             Debug.Log("SOMETHING WAS TRUE 4");
                             return true;
