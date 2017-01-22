@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockBuildSand : MonoBehaviour {
+public class BlockBuildSand : Block {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public BlockBuildSand() : base()
+    {
+
+    }
+
+    public override Tile TexturePosition(Direction direction)
+    {
+        Tile tile = new Tile();
+        tile.x = 3;
+        tile.y = 0;
+        return tile;
+    }
 }

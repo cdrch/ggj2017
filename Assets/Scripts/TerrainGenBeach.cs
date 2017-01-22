@@ -34,6 +34,8 @@ public class TerrainGenBeach {
 
     int cliffMaxHeight = 10;
 
+    int offset = -3;
+
     public Chunk ChunkGen(Chunk chunk)
     {        
         for (int x = chunk.pos.x - 1; x < chunk.pos.x + Chunk.chunkSize + 1; x++) // CURRENTLY HERE - originally -3 to +3 on this line and the next
@@ -52,7 +54,27 @@ public class TerrainGenBeach {
                     }
                 }
                 */
+                //Blueprint bp = GameObject.Find("MiscScripts").GetComponent<SolutionChecker>().blueprints[0];
+                /*
+                for (int xb = 0; xb < 0 + bp.width; xb++)
+                {
+                    for (int zb = 0; zb < 6; zb++)
+                    {
+                        if (xb == 0 || zb == 0 || xb == 5 || zb == 5)
+                            chunk.world.SetBlock(xb + 1, -10, zb + 1, new BlockBuildSand());
+                    }
+                }
+                */
+                for (int xb = 0; xb < 6; xb++)
+                {
+                    for (int zb = 0; zb < 6; zb++)
+                    {
+                        if (xb == 0 || zb == 0 || xb == 5 || zb == 5)
+                            chunk.world.SetBlock(xb + 1, -10, zb + 1, new BlockBuildSand());
+                    }
+                }
                 
+
             }
         }
         return chunk;
