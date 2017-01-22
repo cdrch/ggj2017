@@ -49,7 +49,7 @@ public class World : MonoBehaviour
         newChunk = terrainGen.ChunkGen(newChunk);
         // TO-DO: Switch the order of these two variables if you save less often and don't mind saving taking longer - make sure to test and profile!
         newChunk.SetBlocksUnmodified();
-        bool loaded = Serialization.Load(newChunk);
+        //bool loaded = Serialization.Load(newChunk);
     }
 
     public Chunk GetChunk(int x, int y, int z)
