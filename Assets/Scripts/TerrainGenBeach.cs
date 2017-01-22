@@ -36,9 +36,9 @@ public class TerrainGenBeach {
 
     public Chunk ChunkGen(Chunk chunk)
     {        
-        for (int x = chunk.pos.x - 3; x < chunk.pos.x + Chunk.chunkSize + 3; x++)
+        for (int x = chunk.pos.x - 1; x < chunk.pos.x + Chunk.chunkSize + 1; x++) // CURRENTLY HERE - originally -3 to +3 on this line and the next
         {
-            for (int z = chunk.pos.z - 3; z < chunk.pos.z + Chunk.chunkSize + 3; z++)
+            for (int z = chunk.pos.z - 1; z < chunk.pos.z + Chunk.chunkSize + 1; z++)
             {
                 chunk = ChunkColumnGen(chunk, x, z);
                 /*

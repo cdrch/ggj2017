@@ -15,8 +15,8 @@ public class WaveMaker : MonoBehaviour
     int deltaMinCurrentDistance = 5;
     int waveMinHeight = -9;
 
-    int waveMinZ = -64;
-    int waveMaxZ = 64;
+    int waveMinZ = -16;
+    int waveMaxZ = 16;
 
     bool incoming;
     public bool emergencyStop = false;
@@ -111,9 +111,9 @@ public class WaveMaker : MonoBehaviour
                     remainingSpawners = spawnerCount;
                     for (int xabc = minCurrentDistance; xabc > currentDistance; xabc--)
                     {
-                        for (int zabc = waveMinZ / 4; zabc < waveMaxZ / 4; zabc++)
+                        for (int zabc = waveMinZ; zabc < waveMaxZ; zabc++)
                         {
-                            if (remainingSpawners > 0 && Random.Range(0f, 1f) < 0.00390625f) // Appox. one every eight rows
+                            if (remainingSpawners > 0 && Random.Range(0f, 1f) < 0.015625) // Appox. one every four rows
                             {
                                 StartCoroutine(TemporaryObject(Instantiate(sandSpawner, new Vector3(xabc, -8.8f, zabc), Quaternion.identity), 0.5f));
                             }
