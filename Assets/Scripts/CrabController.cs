@@ -129,11 +129,13 @@ public class CrabController : MonoBehaviour {
         if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
             EditTerrain.SetBlock(hit, new BlockAir());
             UpdateSandInventory(4);
+            AudioManager.instance.PlayAudio(AudioManager.instance.sfxPickup);
         }
         // If no sand block is detected, place one down
         else {
             EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
             UpdateSandInventory(-4);
+            AudioManager.instance.PlayAudio(AudioManager.instance.sfxPickup);
         }
     }
 
@@ -141,6 +143,7 @@ public class CrabController : MonoBehaviour {
         if (other.gameObject.tag == "Loose Sand") {
             Destroy(other.gameObject);
             UpdateSandInventory(4);
+            AudioManager.instance.PlayAudio(AudioManager.instance.sfxPickup);
         }
     }
 
