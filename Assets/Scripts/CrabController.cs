@@ -18,7 +18,8 @@ public class CrabController : MonoBehaviour {
     private Vector3 lastDirection = Vector3.forward;
     private Vector3 gravity = Vector3.zero;
     private Rigidbody rigidbod;
-    
+    private SandInv sandInventory;
+
 
     /*
      * Store Gravity value
@@ -27,6 +28,7 @@ public class CrabController : MonoBehaviour {
     private void Awake () {
         gravity = Physics.gravity;
         rigidbod = GetComponent<Rigidbody>();
+        sandInventory = GetComponent<SandInv>();
 	}
 	
 	
@@ -126,10 +128,23 @@ public class CrabController : MonoBehaviour {
         // If a sand block is detected, remove it
         if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
             EditTerrain.SetBlock(hit, new BlockAir());
+            UpdateSandInventory(4);
         }
         // If no sand block is detected, place one down
         else {
             EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
+            UpdateSandInventory(-4);
         }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Loose Sand") {
+            Destroy(other.gameObject);
+            UpdateSandInventory(4);
+        }
+    }
+
+    private void UpdateSandInventory(int value) {
+        sandInventory.LooseSand += value;
     }
 }
