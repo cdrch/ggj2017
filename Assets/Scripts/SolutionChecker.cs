@@ -50,6 +50,7 @@ public class SolutionChecker : MonoBehaviour {
             thing = false;
         }
         */
+        /*
         if(Input.GetKeyDown(KeyCode.Return))
         {
             if (CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16)) {

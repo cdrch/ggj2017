@@ -26,7 +26,7 @@ public class WaveMaker : MonoBehaviour
     public int sandCounter = 0;
 
     public float waveTotalTime = 5f;
-    public float timeUntilStart = 3f;
+    public float timeUntilStart = 20f;
 
     List<int> waterColumnsToAvoid;
 
