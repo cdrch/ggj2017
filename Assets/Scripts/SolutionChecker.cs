@@ -19,6 +19,8 @@ public class SolutionChecker : MonoBehaviour {
     int testBlueprintHeight = 1;
     bool testDoesHaveRoof = false;
 
+    public Blueprint[] blueprints;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -29,7 +31,7 @@ public class SolutionChecker : MonoBehaviour {
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            if(CheckAgainstAllWinConditions())
+            if(CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16))
             {
                 Debug.Log("WIN");
             }
@@ -40,19 +42,28 @@ public class SolutionChecker : MonoBehaviour {
         }
 	}
 
-    public bool CheckAgainstAllWinConditions()
+    public bool CheckAgainstAllWinConditions(Blueprint bp, int xLimitLow, int xLimitHigh, int zLimitLow, int zLimitHigh)
     {
-        
-        return CheckAgainstWinCondition(testBlueprintHeight, testBlueprintWidth, testBlueprintLength, testBlueprint, testDoesHaveRoof);
+        WorldPos wpStart;
+        WorldPos wpEnd;
+        if (CheckAgainstWinCondition(bp.height, bp.width, bp.length, bp.blueprint, bp.hasRoof, out wpStart, out wpEnd, xLimitLow, xLimitHigh, zLimitLow, zLimitHigh))
+        {
+            foreach (Blueprint b in bp.subBlueprints)
+            {
+                CheckAgainstAllWinConditions(b, wpStart.x, wpEnd.x, wpStart.z, wpEnd.z);
+            }
+            return true;
+        }
+        return false;
     }
 
-    public bool CheckAgainstWinCondition(int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool hasRoof)
+    public bool CheckAgainstWinCondition(int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool hasRoof, out WorldPos start, out WorldPos end, int xLimitLow, int xLimitHigh, int zLimitLow, int zLimitHigh)
     {
-        for (int x = -16; x < 16; x++)
+        for (int x = xLimitLow; x < xLimitHigh + 1; x++)
         {
             for (int y = -16; y < 16; y++)
             {
-                for (int z = -16; z < 16; z++)
+                for (int z = zLimitLow; z < zLimitHigh + 1; z++)
                 {
                     //Debug.Log(x + " " + y + " " + z);
                     /*
@@ -63,24 +74,28 @@ public class SolutionChecker : MonoBehaviour {
                     */
                     if (world.GetBlock(x, y, z) is BlockSand)
                     {
-                        Debug.Log("yep");
-                        if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, false))
+                        //Debug.Log("yep");
+                        if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, false, out end))
                         {
+                            start = new WorldPos(x, y, z);
                             Debug.Log("SOMETHING WAS TRUE 1");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, false))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, false, out end))
                         {
+                            start = new WorldPos(x, y, z);
                             Debug.Log("SOMETHING WAS TRUE 2");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, false, true, out end))
                         {
+                            start = new WorldPos(x, y, z);
                             Debug.Log("SOMETHING WAS TRUE 3");
                             return true;
                         }
-                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, true))
+                        else if (LookForRoomsFixed(new WorldPos(x, y, z), blueprintHeight, blueprintWidth, blueprintLength, blueprint, hasRoof, true, true, out end))
                         {
+                            start = new WorldPos(x, y, z);
                             Debug.Log("SOMETHING WAS TRUE 4");
                             return true;
                         }
@@ -89,11 +104,14 @@ public class SolutionChecker : MonoBehaviour {
                 }
             }
         }
+        start = new WorldPos(0, 0, 0);
+        end = start;
         return false;
     }
 
-    bool LookForRoomsFixed(WorldPos startingBlock, int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool roof, bool flipped, bool backwards) // flipped and backwards not implemented
+    bool LookForRoomsFixed(WorldPos startingBlock, int blueprintHeight, int blueprintWidth, int blueprintLength, int[] blueprint, bool roof, bool flipped, bool backwards, out WorldPos lastBlock) // flipped and backwards not implemented
     {
+        lastBlock = new WorldPos(0, 0, 0);
         for (int y = 0; y < blueprintHeight + 1; y++)
         {
             for (int x = 0; x < blueprintWidth; x++)
@@ -130,6 +148,7 @@ public class SolutionChecker : MonoBehaviour {
                                 return false;
                         }                        
                     }
+                    lastBlock = new WorldPos(x, y, z);
                 }
             }
         }
