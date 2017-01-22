@@ -127,24 +127,31 @@ public class CrabController : MonoBehaviour {
 
         // If a sand block is detected, remove it
         if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
-            EditTerrain.SetBlock(hit, new BlockAir());
-            UpdateSandInventory(4);
+            if (sandInventory.LooseSand < sandInventory.maxSand) {
+                EditTerrain.SetBlock(hit, new BlockAir());
+                UpdateSandInventory(sandInventory.sandPerBlock);
+            }
         }
         // If no sand block is detected, place one down
         else {
-            EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
-            UpdateSandInventory(-4);
+            if (sandInventory.LooseSand > 0) {
+                EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
+                UpdateSandInventory(-sandInventory.sandPerBlock);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Loose Sand") {
-            Destroy(other.gameObject);
-            UpdateSandInventory(4);
+            if (sandInventory.LooseSand < sandInventory.maxSand) {
+                Destroy(other.gameObject);
+                UpdateSandInventory(sandInventory.sandPerBlock);
+            }
         }
     }
 
     private void UpdateSandInventory(int value) {
+        AudioManager.instance.PlayAudio(AudioManager.instance.sfxPickup);
         sandInventory.LooseSand += value;
     }
 }
