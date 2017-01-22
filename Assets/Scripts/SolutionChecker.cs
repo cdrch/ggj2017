@@ -24,6 +24,10 @@ public class SolutionChecker : MonoBehaviour {
 
     public Blueprint[] blueprints;
 
+    int baseOffset = -3;
+    int Y_BASE_LEVEL = -8;
+    bool thing = true;
+
 	// Use this for initialization
 	void Start () {
         endGamePanel.SetActive(false);
@@ -33,12 +37,26 @@ public class SolutionChecker : MonoBehaviour {
 	void Update ()
     {
         /*
+        if (thing)
+        {
+            Debug.Log(blueprints[0].width + "_" + blueprints[0].length);
+            for (int x = 0; x < blueprints[0].width; x++)
+            {
+                for (int z = 0; z < blueprints[0].length; z++)
+                {
+                    EditTerrain.SetBlock(new Vector3(x, Y_BASE_LEVEL, z), new BlockBuildSand(), world);
+                }
+            }
+            thing = false;
+        }
+        */
         if(Input.GetKeyDown(KeyCode.Return))
         {
             if (CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16)) {
                 Debug.Log("WIN");
             }
-            else {
+            else
+            {
                 Debug.Log("NOPE");
             }
         }
@@ -312,5 +330,3 @@ public class SolutionChecker : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
-
-
