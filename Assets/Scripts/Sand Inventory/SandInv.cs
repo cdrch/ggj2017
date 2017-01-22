@@ -39,17 +39,15 @@ public class SandInv : MonoBehaviour {
 			{
 				for(int z=0; z < levelSizes[level];z++)
 				{
-					Vector3 newPos = transform.position + (new Vector3(x,level,z))*blockSidelen - (new Vector3(levelSizes[level],0,levelSizes[level]))*blockSidelen/2;
+					Vector3 newPos = transform.position + (new Vector3(x + 0.4f,level + 1f,z))*blockSidelen - (new Vector3(levelSizes[level],0,levelSizes[level]))*blockSidelen/2;
 					GameObject newSand = Instantiate(prefab, newPos, Quaternion.identity);
-					if(sandLeft < sandPerBlock)
-					{
-						newSand.transform.position += new Vector3(0,-sandLeft/(float)sandPerBlock/2,0);
-						newSand.transform.localScale = new Vector3(1,sandLeft/(float)sandPerBlock,1);
-					}
-					sandLeft -= Mathf.Clamp(sandPerBlock,1,sandLeft);
+
+                    newSand.transform.parent = this.transform;
+
+                    sandLeft -= Mathf.Clamp(sandPerBlock,1,sandLeft);
 					if(sandLeft <= 0)
 						break;
-				}
+                }
 				if(sandLeft <= 0)
 					break;
 			}
