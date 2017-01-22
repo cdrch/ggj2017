@@ -33,9 +33,8 @@ public class SandInv : MonoBehaviour {
 
 	public void CreateBlocks()
 	{
-		int sandLeft = looseSand;
 		int level = 0;
-		while(sandLeft > 0 && level < levelSizes.Count)
+		while(level < levelSizes.Count)
 		{
 			for(int x=0; x < levelSizes[level]; x++)
 			{

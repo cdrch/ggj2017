@@ -1577,9 +1577,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0a502112a309841b57a9331dce0c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  looseSand: 28
-  maxSand: 100
-  sandPerBlock: 2
+  looseSand: 0
+  maxSand: 14
+  sandPerBlock: 1
   blockSidelen: 0.2
   blocks: []
   prefab: {fileID: 1405702928653646, guid: d10ab672e4ae6d64da975a80ec62e3d0, type: 2}
