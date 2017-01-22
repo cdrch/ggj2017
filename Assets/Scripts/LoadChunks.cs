@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ public class LoadChunks : MonoBehaviour
 {
     #region Variables
     public World world;
+    public GameObject titleScreen;
 
     List<WorldPos> updateList = new List<WorldPos>();
     List<WorldPos> buildList = new List<WorldPos>();
@@ -58,6 +60,10 @@ public class LoadChunks : MonoBehaviour
                              new WorldPos(-6, 0, -5), new WorldPos(-6, 0,  5), new WorldPos(-5, 0, -6), new WorldPos(-5, 0,  6), new WorldPos( 5, 0, -6),
                              new WorldPos( 5, 0,  6), new WorldPos( 6, 0, -5), new WorldPos( 6, 0,  5) };
     #endregion
+
+    private void Start() {
+        StartCoroutine(ShowTitleScreen());
+    }
 
     void Update()
     {
@@ -121,6 +127,11 @@ public class LoadChunks : MonoBehaviour
 
             // If no chunk was added, set doneAddingChunks to 'true'
             doneAddingChunks = !addedNewChunk;
+            /*
+            if (doneAddingChunks) {
+                StartGame();
+            }
+            */
         }
     }
 
@@ -147,7 +158,7 @@ public class LoadChunks : MonoBehaviour
             Chunk chunk = world.GetChunk(updateList[0].x, updateList[0].y, updateList[0].z);
             if (chunk != null) {
                 chunk.update = true;
-
+                /*
                 // Check if the player has been created yet
                 if (!createdPlayer) {
                     // If the current chunk position equals the following hard-coded position, create the player
@@ -159,6 +170,7 @@ public class LoadChunks : MonoBehaviour
                         createdPlayer = true;
                     }
                 }
+                */
             }
             updateList.RemoveAt(0);
         }
@@ -184,5 +196,24 @@ public class LoadChunks : MonoBehaviour
         }
         timer++;
         return false;
+    }
+
+    IEnumerator ShowTitleScreen() {
+        yield return new WaitForSeconds(15);
+        StartGame();
+    }
+
+    private void StartGame() {
+        // Check if the player has been created yet
+        if (!createdPlayer) {
+            // Create the crab player at a hard-coded position
+            world.CreateCrab(10, -8, -5);
+
+            // Set to 'true' so we know the player has been created
+            createdPlayer = true;
+        }
+
+        // Disable start screen
+        titleScreen.SetActive(false);
     }
 }

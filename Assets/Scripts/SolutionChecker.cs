@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SolutionChecker : MonoBehaviour {
 
     public World world;
+    public GameObject endGamePanel;
     public static int[] testBlueprint = new int[] 
     {
         1, 1, 1, 1, 1, 1,
@@ -23,24 +26,36 @@ public class SolutionChecker : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        endGamePanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            if(CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16))
-            {
+            if (CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16)) {
                 Debug.Log("WIN");
             }
-            else
-            {
+            else {
                 Debug.Log("NOPE");
             }
         }
+        */
 	}
+
+    IEnumerator CheckForWin() {
+        bool notWinning = true;
+        while (notWinning) {
+            if (CheckAgainstAllWinConditions(blueprints[0], -16, 16, -16, 16)) {
+                notWinning = false;
+                StartCoroutine(EndGame());
+            }
+
+            yield return new WaitForSeconds(1f);
+        }        
+    }
 
     public bool CheckAgainstAllWinConditions(Blueprint bp, int xLimitLow, int xLimitHigh, int zLimitLow, int zLimitHigh)
     {
@@ -289,4 +304,13 @@ public class SolutionChecker : MonoBehaviour {
     }
     */
     #endregion
+
+    IEnumerator EndGame() {
+
+        endGamePanel.SetActive(true);
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
+
+
