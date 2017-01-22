@@ -30,10 +30,16 @@ public class WaveMaker : MonoBehaviour
 
     List<int> waterColumnsToAvoid;
 
+    public GameObject sandSpawner;
+
+    public int spawnerCount = 10;
+    int remainingSpawners;
+
 	// Use this for initialization
 	void Start () {
         waterColumnsToAvoid = new List<int>();
         StartCoroutine(StartTimer());
+        remainingSpawners = spawnerCount;
 	}
 	
 	// Update is called once per frame
@@ -102,6 +108,18 @@ public class WaveMaker : MonoBehaviour
             {
                 if (incoming)
                 {
+                    remainingSpawners = spawnerCount;
+                    for (int xabc = minCurrentDistance; xabc > currentDistance; xabc--)
+                    {
+                        for (int zabc = waveMinZ / 4; zabc < waveMaxZ / 4; zabc++)
+                        {
+                            if (remainingSpawners > 0 && Random.Range(0f, 1f) < 0.00390625f) // Appox. one every eight rows
+                            {
+                                StartCoroutine(TemporaryObject(Instantiate(sandSpawner, new Vector3(xabc, -8.8f, zabc), Quaternion.identity), 0.5f));
+                            }
+                        }
+                    }
+                    
                     waterColumnsToAvoid.Clear();
                 }
                 else
@@ -127,5 +145,11 @@ public class WaveMaker : MonoBehaviour
 
             yield return new WaitForSeconds(waveTotalTime / (furthestDistance - maxDistanceInland));
         }        
+    }
+
+    IEnumerator TemporaryObject(GameObject go, float timeToDeleteAfter)
+    {
+        yield return new WaitForSeconds(timeToDeleteAfter);
+        Destroy(go);
     }
 }
