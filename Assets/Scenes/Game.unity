@@ -340,6 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 609583183}
+  blueprints:
+  - {fileID: 11400000, guid: 3a04d025bf33fc741bf91b9e1866f885, type: 2}
 --- !u!4 &1363600455
 Transform:
   m_ObjectHideFlags: 0
