@@ -7,6 +7,7 @@ public class CrabController : MonoBehaviour {
     // Public Attributes
     public float moveSpeed = 5.0f;
     public float jumpForce = 350.0f;
+    public float distanceFromPointToPlace = 1f;
     public LayerMask whatIsGround;
     public bool update = false;
     public World world;
@@ -14,6 +15,7 @@ public class CrabController : MonoBehaviour {
 
     // Private Attributes
     private Vector3 moveDirection = Vector3.zero;
+    private Vector3 lastDirection = Vector3.forward;
     private Vector3 gravity = Vector3.zero;
     private Rigidbody rigidbod;
     
@@ -35,16 +37,37 @@ public class CrabController : MonoBehaviour {
         if (update) {
             // Set moveDirection based on input
             moveDirection = new Vector3(moveSpeed * Input.GetAxis("Horizontal"), 
-                                        gravity.y, 
+                                        0.0f, 
                                         moveSpeed * Input.GetAxis("Vertical"));
 
-            // Transform the vector3 to local space
-            moveDirection = transform.TransformDirection(moveDirection);
+            // Face the direction of velocity
+            if (moveDirection.sqrMagnitude > 0.1f) {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                targetRotation.x = transform.rotation.x;
+                targetRotation.z = transform.rotation.z;
+                transform.rotation = targetRotation;
+                lastDirection = moveDirection;
+            }
+
+            // Sand Interaction
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                RaycastHit hit;
+
+                // If sand block is detected, remove it
+                if (Physics.Raycast(transform.position, lastDirection, out hit, distanceFromPointToPlace)) {
+                    EditTerrain.SetBlock(hit, new BlockAir());
+                }
+                // If no sand block was detected, place one
+                else {
+                    EditTerrain.SetBlock(transform.position + Vector3.Normalize(lastDirection) * distanceFromPointToPlace, new BlockSand(), world);
+                }
+            }
 
             // Detect "Jump" input
-            if (Input.GetButtonDown("Jump")) {
+            if (Input.GetKeyDown(KeyCode.LeftShift)) {
                 Jump();
             }
+            
         }
     }
 
@@ -60,7 +83,7 @@ public class CrabController : MonoBehaviour {
             rigidbod.velocity = new Vector3(moveDirection.x, rigidbod.velocity.y, moveDirection.z);
 
             // Apply Gravity Force
-            rigidbod.AddForce(Vector3.up * moveDirection.y);
+            rigidbod.AddForce(Vector3.up * gravity.y);
 
             // Update World Position
             pos.x = (int)Mathf.Round(transform.position.x);

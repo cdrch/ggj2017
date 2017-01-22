@@ -1519,11 +1519,11 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729838389049698}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9e88fe3d0bc55694b86755daf45fd6a9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Size: {x: 0.06, y: 0.1, z: 0.07}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95124389647953348
 Animator:
@@ -1555,6 +1555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 350
+  distanceFromPointToPlace: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
