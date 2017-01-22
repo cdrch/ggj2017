@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -91,15 +91,15 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &174525086
+--- !u!1 &481337528
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 174525088}
-  - component: {fileID: 174525087}
+  - component: {fileID: 481337530}
+  - component: {fileID: 481337529}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -107,12 +107,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &174525087
+--- !u!108 &481337529
 Light:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 174525086}
+  m_GameObject: {fileID: 481337528}
   m_Enabled: 1
   serializedVersion: 7
   m_Type: 1
@@ -141,12 +141,12 @@ Light:
   m_BounceIntensity: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &174525088
+--- !u!4 &481337530
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 174525086}
+  m_GameObject: {fileID: 481337528}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -154,20 +154,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &252459911
+--- !u!1 &706391199
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 252459916}
-  - component: {fileID: 252459915}
-  - component: {fileID: 252459914}
-  - component: {fileID: 252459913}
-  - component: {fileID: 252459912}
-  - component: {fileID: 252459917}
-  - component: {fileID: 252459918}
+  - component: {fileID: 706391204}
+  - component: {fileID: 706391203}
+  - component: {fileID: 706391202}
+  - component: {fileID: 706391201}
+  - component: {fileID: 706391200}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -175,33 +173,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &252459912
+--- !u!81 &706391200
 AudioListener:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
+  m_GameObject: {fileID: 706391199}
   m_Enabled: 1
---- !u!124 &252459913
+--- !u!124 &706391201
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
+  m_GameObject: {fileID: 706391199}
   m_Enabled: 1
---- !u!92 &252459914
+--- !u!92 &706391202
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
+  m_GameObject: {fileID: 706391199}
   m_Enabled: 1
---- !u!20 &252459915
+--- !u!20 &706391203
 Camera:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
+  m_GameObject: {fileID: 706391199}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -230,126 +228,62 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
---- !u!4 &252459916
+--- !u!4 &706391204
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
-  m_LocalRotation: {x: 0.44619775, y: 0, z: 0, w: 0.8949344}
-  m_LocalPosition: {x: 16.21, y: 1.6, z: -11.13}
+  m_GameObject: {fileID: 706391199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 53, y: 0, z: 0}
---- !u!114 &252459917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9beb0ea3b9581be409de5ec77df5ef92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  world: {fileID: 609583183}
-  distanceFromPointToPlace: 1
---- !u!114 &252459918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252459911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2c945ded4c80dc4da8f271347806fcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  world: {fileID: 609583183}
---- !u!1 &609583182
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1221234038
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 609583184}
-  - component: {fileID: 609583183}
+  - component: {fileID: 1221234040}
+  - component: {fileID: 1221234039}
   m_Layer: 0
-  m_Name: World
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &609583183
+--- !u!114 &1221234039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 609583182}
+  m_GameObject: {fileID: 1221234038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48dae258066b5a64f83fe8ef19c54f2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c0a502112a309841b57a9331dce0c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkPrefab: {fileID: 1568610133702386, guid: 7300e192e6681f24398d2c64a6b80c0d,
-    type: 2}
-  crabPrefab: {fileID: 1729838389049698, guid: 3c119a0b55ee9a14daecf7b9bc742340, type: 2}
-  worldName: world
---- !u!4 &609583184
+  looseSand: 27
+  maxSand: 100
+  sandPerBlock: 2
+  blockSidelen: 1
+  prefab: {fileID: 1405702928653646, guid: d10ab672e4ae6d64da975a80ec62e3d0, type: 2}
+  levelSizes: 030000000200000001000000
+--- !u!4 &1221234040
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 609583182}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.7797737, y: 1.4721704, z: -2.1335533}
+  m_GameObject: {fileID: 1221234038}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1363600453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1363600455}
-  - component: {fileID: 1363600454}
-  m_Layer: 0
-  m_Name: SolutionChecker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1363600454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1363600453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84337ef72767c6f41a9c2bb4d8027dcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  world: {fileID: 609583183}
---- !u!4 &1363600455
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1363600453}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.4076805, y: -16.823677, z: -1.1418622}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

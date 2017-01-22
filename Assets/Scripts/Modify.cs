@@ -10,6 +10,15 @@ public class Modify : MonoBehaviour
 
     void Update()
     {
+        /*
+        RaycastHit h;
+        if(Physics.Raycast(transform.position, transform.forward, out h, 100f))
+        {
+            Debug.Log(EditTerrain.GetBlock(h) + " " + h.transform.position);
+        }
+        */
+        
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RaycastHit hit;
