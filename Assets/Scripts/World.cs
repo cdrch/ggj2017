@@ -105,7 +105,7 @@ public class World : MonoBehaviour
         Chunk chunk = null;
         if (chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
         {
-            Serialization.SaveChunk(chunk);
+            //Serialization.SaveChunk(chunk); // TO-DO: deal with this! SAVING
             UnityEngine.Object.Destroy(chunk.gameObject); // TO-DO: Simplify this?
             chunks.Remove(new WorldPos(x, y, z));
         }

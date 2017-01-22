@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockSpawner : MonoBehaviour {
 
 	public GameObject prefab;
-	public float spawnTime = 30;
+	public float spawnTime = .5f;
 	public float clock = 0;
 
 	// Use this for initialization
@@ -25,7 +25,7 @@ public class BlockSpawner : MonoBehaviour {
 
 	public void Spawn()
 	{
-		Instantiate(prefab,Vector3.zero,Quaternion.identity);
+		Instantiate(prefab,transform.position,Quaternion.identity);
 	}
 
 }

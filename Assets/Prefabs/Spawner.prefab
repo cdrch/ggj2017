@@ -51,6 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd44ef91746f0840b728744a148603c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  spawnTime: 30
+  prefab: {fileID: 1405702928653646, guid: 43c0ed615e8017545ae1983db8bded9a, type: 2}
+  spawnTime: 1
   clock: 0
